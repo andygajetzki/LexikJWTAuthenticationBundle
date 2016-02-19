@@ -26,9 +26,8 @@ class LexikJWTAuthenticationExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $container->setParameter('lexik_jwt_authentication.private_key_path', $config['private_key_path']);
-        $container->setParameter('lexik_jwt_authentication.public_key_path', $config['public_key_path']);
-        $container->setParameter('lexik_jwt_authentication.pass_phrase', $config['pass_phrase']);
+
+        $container->setParameter('lexik_jwt_authentication.secret', $config['secret']);
         $container->setParameter('lexik_jwt_authentication.token_ttl', $config['token_ttl']);
         $container->setParameter('lexik_jwt_authentication.user_identity_field', $config['user_identity_field']);
 

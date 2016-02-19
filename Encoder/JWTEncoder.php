@@ -12,33 +12,23 @@ use Namshi\JOSE\SimpleJWS;
  */
 class JWTEncoder implements JWTEncoderInterface
 {
-    const ALGORYTHM = 'RS256';
+    const ALGORYTHM = 'HS256';
 
     /**
      * @var string
      */
-    protected $privateKey;
+    protected $secret;
 
-    /**
-     * @var string
-     */
-    protected $publicKey;
-
-    /**
-     * @var string
-     */
-    protected $passPhrase;
 
     /**
      * @param string $privateKey
      * @param string $publicKey
      * @param string $passPhrase
      */
-    public function __construct($privateKey, $publicKey, $passPhrase)
+    public function __construct($secret)
     {
-        $this->privateKey = $privateKey;
-        $this->publicKey  = $publicKey;
-        $this->passPhrase = $passPhrase;
+        $this->secret = $secret;
+
     }
 
     /**
@@ -48,7 +38,7 @@ class JWTEncoder implements JWTEncoderInterface
     {
         $jws = new SimpleJWS(['alg' => self::ALGORYTHM]);
         $jws->setPayload($data);
-        $jws->sign($this->getPrivateKey());
+        $jws->sign($this->secret);
 
         return $jws->getTokenString();
     }
@@ -65,7 +55,7 @@ class JWTEncoder implements JWTEncoderInterface
             return false;
         }
 
-        if (!$jws->isValid($this->getPublicKey(), self::ALGORYTHM)) {
+        if (!$jws->isValid($this->secret, self::ALGORYTHM)) {
             return false;
         }
 

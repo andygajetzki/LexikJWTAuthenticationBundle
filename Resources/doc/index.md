@@ -28,13 +28,6 @@ public function registerBundles()
 }
 ```
 
-Generate the SSH keys :
-
-``` bash
-$ mkdir -p app/var/jwt
-$ openssl genrsa -out app/var/jwt/private.pem -aes256 4096
-$ openssl rsa -pubout -in app/var/jwt/private.pem -out app/var/jwt/public.pem
-```
 
 Configuration
 -------------
@@ -43,9 +36,7 @@ Configure the SSH keys path in your `config.yml` :
 
 ``` yaml
 lexik_jwt_authentication:
-    private_key_path: %jwt_private_key_path%
-    public_key_path:  %jwt_public_key_path%
-    pass_phrase:      %jwt_key_pass_phrase%
+    secret:           %jwt_secret%
     token_ttl:        %jwt_token_ttl%
 ```
 
